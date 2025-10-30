@@ -16,6 +16,7 @@ public class App {
         population.add(new Engineer("Tony Stark", 40, 2));
         population.add(new Engineer("Linus Torvals", 60, 10));
         population.add(new Doctor("Chapatin", 60, " cardiology"));
+        population.add(new Musician("Mozart", 0));
 
         for(Human h: population){
             h.whoIAm();
