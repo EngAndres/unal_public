@@ -9,7 +9,8 @@ class Pokemon:
         damage = 15
         return (damage * self.health_) / 100 
 
-    def defense(self, damage: int):
+    def defense(self, damage: int, type_pokemon: str):
+        print("---- Pokemon Defense ----")
         block = False
         if not block:
             self.health_ -= damage
