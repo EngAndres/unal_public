@@ -1,6 +1,7 @@
 from pokemon_electric import PokemonElectric
 from pokemon_fire import PokemonFire
 
+
 pikachu = PokemonElectric("Pikachu")
 charmander = PokemonFire("Charmander")
 
