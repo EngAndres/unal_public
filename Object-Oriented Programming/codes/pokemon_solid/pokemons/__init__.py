@@ -1,0 +1,2 @@
+from abstract_pokemon import Pokemon
+from fire_pokemon import FirePokemon
