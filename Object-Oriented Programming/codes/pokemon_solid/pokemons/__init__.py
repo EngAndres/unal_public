@@ -1,2 +1,5 @@
 from abstract_pokemon import Pokemon
 from fire_pokemon import FirePokemon
+from rock_pokemon import RockPokemon
+from water_pokemon import WaterPokemon
+from electric_pokemon import ElectricPokemon
