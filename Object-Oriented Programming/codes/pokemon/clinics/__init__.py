@@ -1,3 +1,0 @@
-from clinic_emergency import ClinicEmergency
-from clinic_professional import ProfessionalClinic
-from i_clinic import Clinic
