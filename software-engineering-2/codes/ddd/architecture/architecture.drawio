@@ -1,0 +1,97 @@
+<mxfile host="65bd71144e">
+    <diagram id="architecture" name="UNAL World Cup Architecture">
+        <mxGraphModel dx="2803" dy="487" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="UNAL World Cup — DDD Backend Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="30" width="700" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="client" value="HTTP Client&#xa;(Browser / Postman / curl)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="620" y="100" width="260" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="fastapi" value="FastAPI Application&#xa;main.py" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="620" y="220" width="260" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="client" target="fastapi" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="app_layer" value="Applications Layer (API Routers)" style="swimlane;startSize=30;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=13;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="220" y="340" width="1060" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="app_stadiums" value="stadiums_app.py&#xa;/stadiums" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" parent="app_layer" vertex="1">
+                    <mxGeometry x="60" y="40" width="200" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="app_teams" value="teams_app.py&#xa;/teams" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" parent="app_layer" vertex="1">
+                    <mxGeometry x="430" y="40" width="200" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="app_players" value="players_app.py&#xa;/players" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" parent="app_layer" vertex="1">
+                    <mxGeometry x="800" y="40" width="200" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="fastapi" target="app_layer" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="svc_layer" value="Services Layer (Business Logic)" style="swimlane;startSize=30;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="220" y="510" width="1060" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="svc_stadiums" value="StadiumService&#xa;stadiums_service.py" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" parent="svc_layer" vertex="1">
+                    <mxGeometry x="60" y="40" width="200" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="svc_teams" value="TeamService&#xa;teams_service.py" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" parent="svc_layer" vertex="1">
+                    <mxGeometry x="430" y="40" width="200" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="svc_players" value="PlayerService&#xa;players_service.py" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" parent="svc_layer" vertex="1">
+                    <mxGeometry x="800" y="40" width="200" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="app_layer" target="svc_layer" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="domain_layer" value="Domains Layer (Pydantic Models — shared contracts)" style="swimlane;startSize=30;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="-880" y="660" width="1060" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="dom_stadium" value="StadiumBase&#xa;StadiumOut" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" parent="domain_layer" vertex="1">
+                    <mxGeometry x="60" y="40" width="200" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="dom_team" value="TeamBase&#xa;TeamOut" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" parent="domain_layer" vertex="1">
+                    <mxGeometry x="330" y="40" width="200" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="dom_player" value="PlayerBase / PlayerIn&#xa;PlayerOut" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" parent="domain_layer" vertex="1">
+                    <mxGeometry x="600" y="40" width="200" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="dom_config" value="DBSettings&#xa;config/db_config.py" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" parent="domain_layer" vertex="1">
+                    <mxGeometry x="850" y="40" width="160" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="repo_layer" value="Repositories Layer (Data Access — SQLAlchemy)" style="swimlane;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="220" y="850" width="1060" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="repo_stadiums" value="StadiumsRepository&#xa;stadiums_repository.py" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" parent="repo_layer" vertex="1">
+                    <mxGeometry x="40" y="45" width="200" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="repo_teams" value="TeamsRepository&#xa;teams_repository.py" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" parent="repo_layer" vertex="1">
+                    <mxGeometry x="290" y="45" width="200" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="repo_players" value="PlayersRepository&#xa;players_repository.py" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" parent="repo_layer" vertex="1">
+                    <mxGeometry x="540" y="45" width="200" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="repo_orm" value="ORM Models&#xa;StadiumModel / TeamModel / PlayerModel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" parent="repo_layer" vertex="1">
+                    <mxGeometry x="790" y="45" width="220" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="svc_layer" target="repo_layer" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="postgres" value="PostgreSQL Database" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=13;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="620" y="1040" width="260" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;" parent="1" source="repo_layer" target="postgres" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="env_note" value=".env&#xa;DB credentials" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fontSize=11;fillColor=#fff2cc;strokeColor=#d6b656;size=15;" parent="1" vertex="1">
+                    <mxGeometry x="940" y="1050" width="130" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="e6" style="dashed=1;endArrow=none;" parent="1" source="env_note" target="postgres" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
