@@ -1,0 +1,252 @@
+\documentclass[doc]{apa6}
+
+\usepackage[spanish]{babel}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{amsmath}
+
+\title{Programación de Computadores \\ Proyecto final: simulador de un sistema de ingeniería \\ Semestre 2026-II}
+\shorttitle{Programación de Computadores --- Proyecto final}
+
+\author{\texttt{Carlos Andrés Sierra, M.Sc.}}
+\affiliation{Departamento de Ingeniería de Sistemas y Computación \\ Facultad de Ingeniería \\ Universidad Nacional de Colombia}
+\leftheader{C.A. Sierra}
+
+\keywords{Programación en Python, simulación, metodología, funciones, ciclos, condicionales}
+
+\authornote{
+    Carlos Andrés Sierra, M.Sc., profesor del curso Programación de Computadores. Integrante del Grupo de investigación en vida artificial (Alife), Universidad Nacional de Colombia.
+}
+
+\begin{document}
+\maketitle
+
+\section*{Resumen del proyecto}
+En grupos de tres integrantes, cada grupo construye un programa en Python que simula un sistema de las ingenierías de sus integrantes. Cada grupo tiene un proyecto distinto, escogido según sus carreras. El programa se entrega como un notebook de Jupyter o Colab y usa únicamente los temas vistos en los slides 04 a 10 del curso: metodología, tipos de datos y expresiones, funciones, condicionales, ciclos \emph{mientras} y ciclos \emph{para}.
+
+\section*{Objetivo}
+Integrar en un solo proyecto la metodología de programación: analizar el problema, especificar sus entradas y salidas, diseñar el algoritmo, probarlo y codificarlo. Al final, cada grupo debe haber escrito un modelo matemático sencillo, resuelto numéricamente paso a paso y comprobado que sus resultados son razonables.
+
+\section*{Qué deben construir}
+Un programa en un notebook de Jupyter o Colab, con un menú que se repite hasta elegir salir. Cada función va en su propia celda y se prueba justo debajo. Las tablas, alertas y resúmenes se muestran con \texttt{print}. El modelo de cada grupo describe cómo cambia el estado del sistema en cada paso de tiempo. El programa debe:
+\begin{enumerate}
+    \item \textbf{Definir el sistema:} pedir los parámetros del modelo, con sus unidades, y validarlos.
+    \item \textbf{Simular:} avanzar paso a paso hasta una condición de parada o un límite de pasos.
+    \item \textbf{Mostrar una tabla} de resultados cada cierto número de pasos.
+    \item \textbf{Generar alertas} según umbrales del sistema, por ejemplo un valor máximo o mínimo.
+    \item \textbf{Mostrar un resumen:} valor máximo, valor mínimo, paso de la condición de parada y valor final.
+    \item \textbf{Guardar dos escenarios} distintos y compararlos.
+    \item \textbf{Salir} del programa.
+\end{enumerate}
+
+\section*{Proyectos por grupo}
+Cada grupo tiene un proyecto distinto. Cada proyecto indica su modelo base, una descripción y lo que aporta cada carrera del grupo. Las ecuaciones son un punto de partida: el grupo debe justificar cualquier cambio en su README. En la sustentación, cada integrante muestra la parte de su carrera.
+
+\subsection*{Grupo 1. Calentamiento de un motor con ventilador}
+Simular la temperatura de un motor que recibe potencia eléctrica y se enfría con un ventilador. El programa calcula cuánto tarda en llegar a la temperatura de trabajo y avisa si se sobrecalienta. Modelo base: $\dfrac{dT}{dt}=\dfrac{P-h\,(T-T_{amb})}{C}$.
+\begin{itemize}
+    \item \textbf{Mecánica:} la potencia útil, las pérdidas por fricción y la transferencia de calor por convección ($h$).
+    \item \textbf{Eléctrica:} la potencia de entrada ($V\times I$) y el control del ventilador, que se enciende por encima de un umbral.
+    \item \textbf{Química:} la masa y el calor específico del motor ($C=\text{masa}\times\text{calor específico}$) y la elección del refrigerante.
+\end{itemize}
+
+\subsection*{Grupo 2. Carga y descarga de un circuito RC}
+Simular el voltaje de un condensador que se carga a través de una resistencia y luego se descarga. El programa calcula la constante de tiempo y el tiempo para llegar al 63\% y al 99\% del voltaje final. Modelo base: $\dfrac{dV}{dt}=\dfrac{V_{ent}-V}{RC}$.
+\begin{itemize}
+    \item \textbf{Mecánica:} la potencia disipada en la resistencia ($V^2/R$) y el calentamiento de su carcasa.
+    \item \textbf{Eléctrica:} el modelo del circuito, la corriente y la constante de tiempo $\tau=RC$.
+    \item \textbf{Química:} la capacitancia depende del dieléctrico, $C=\varepsilon A/d$. El grupo compara dos materiales.
+\end{itemize}
+
+\subsection*{Grupo 3. Reacción química de primer orden y vida media}
+Simular la concentración de un reactivo que se descompone en un reactor agitado. El programa calcula la constante $k$ a partir de dos mediciones, la vida media y el tiempo para llegar a un porcentaje objetivo. Modelo base: $\dfrac{dC}{dt}=-kC$, con $t_{1/2}=\dfrac{\ln 2}{k}$.
+\begin{itemize}
+    \item \textbf{Mecánica:} el volumen del reactor y el tiempo de residencia ($V/Q$) cuando hay flujo de entrada.
+    \item \textbf{Eléctrica:} un calefactor controlado por termostato, que se enciende si la temperatura baja del valor objetivo.
+    \item \textbf{Química:} la ley de velocidad, la vida media y el efecto de la temperatura sobre $k$ (regla simple: $k$ se duplica cada $10\,^\circ$C).
+\end{itemize}
+
+\subsection*{Grupo 4. Sistema masa-resorte-amortiguador}
+Simular la suspensión de un vehículo que pasa un bache. El programa muestra la posición en el tiempo, el sobrepaso máximo y el tiempo de estabilización, y compara tres amortiguadores. Modelo base: $m\ddot{x}=-c\dot{x}-kx$.
+\begin{itemize}
+    \item \textbf{Mecánica:} la frecuencia natural $\omega=\sqrt{k/m}$, el tipo de amortiguamiento (subamortiguado, crítico o sobreamortiguado) y el modelo del bache.
+    \item \textbf{Eléctrica:} un sensor de posición y un amortiguador electrónico que aumenta $c$ cuando la vibración supera un límite.
+    \item \textbf{Química:} el coeficiente $c$ depende de la viscosidad del fluido. El grupo usa una tabla de aceites con sus viscosidades.
+\end{itemize}
+
+\subsection*{Grupo 5. Tiro parabólico con arrastre}
+Simular la trayectoria de un proyectil lanzado por un motor eléctrico, con resistencia del aire. El programa busca el ángulo que da mayor alcance y muestra la trayectoria en una tabla de texto. Modelo base: $\dot{v}_x=-b\,v_x$ y $\dot{v}_y=-g-b\,v_y$, donde $b$ es el arrastre dividido entre la masa.
+\begin{itemize}
+    \item \textbf{Mecánica:} las fuerzas (gravedad y arrastre), el alcance y la altura máxima.
+    \item \textbf{Eléctrica:} la velocidad inicial sale de la energía que entrega el motor: $\tfrac{1}{2}mv^2=\eta\,E_{el}$.
+    \item \textbf{Química:} la densidad del aire según temperatura y presión (ley de gases ideales) y el material del proyectil, que define su masa.
+\end{itemize}
+
+\subsection*{Grupo 6. Crecimiento de un cultivo bacteriano en un biorreactor}
+Simular el crecimiento de una población de bacterias cuya capacidad máxima depende del nutriente. El programa calcula cuándo se alcanza la mitad de la capacidad y cuándo hay que alimentar el cultivo. Modelo base: $\dfrac{dP}{dt}=rP\left(1-\dfrac{P}{K}\right)$, con $K=\text{rendimiento}\times\text{nutriente}$.
+\begin{itemize}
+    \item \textbf{Mecánica:} el volumen del biorreactor, el caudal de la bomba y el tiempo para alimentarlo (volumen/caudal).
+    \item \textbf{Eléctrica:} un termostato que mantiene la temperatura de la incubadora y una bomba eléctrica que agrega nutriente cuando el nivel baja.
+    \item \textbf{Química:} el nutriente limita la capacidad $K$. El grupo calcula $K$ a partir de la concentración inicial y del rendimiento.
+\end{itemize}
+
+\subsection*{Grupo 7. Balance hídrico de un cultivo}
+Simular la humedad del suelo día a día con lluvia, riego, evapotranspiración y drenaje. El programa decide cuándo regar, calcula el consumo total de agua en litros y el tiempo de bombeo. Modelo base: $H_{t+1}=H_t+\text{lluvia}+\text{riego}-\text{evapotranspiración}-\text{drenaje}$.
+\begin{itemize}
+    \item \textbf{Mecánica:} la bomba de riego: caudal, potencia ($\rho\,g\,Q\,H/\eta$) y tiempo de riego.
+    \item \textbf{Civil:} la capacidad de campo del suelo, el drenaje y la escorrentía, y el volumen del tanque de almacenamiento.
+    \item \textbf{Agrícola:} el coeficiente del cultivo ($K_c$), que define la evapotranspiración, y el punto de marchitez, que marca cuándo regar.
+\end{itemize}
+
+\subsection*{Grupo 8. Concentración de sal en un tanque con entrada y salida}
+Simular la concentración de sal en un tanque de mezcla con flujo de entrada y de salida. El programa calcula cuándo llega a un valor objetivo y cuántos litros de agua limpia se necesitan. Modelo base: $\dfrac{dC}{dt}=\dfrac{Q\,C_{ent}-Q\,C}{V}$.
+\begin{itemize}
+    \item \textbf{Mecánica (primer integrante):} el balance de masa, el volumen del tanque y el tiempo de residencia ($V/Q$).
+    \item \textbf{Mecánica (segundo integrante):} el caudal de salida según la altura del agua, $Q=C_d\,A\sqrt{2gh}$ (Torricelli).
+    \item \textbf{Química:} la masa de sal, la concentración y el límite de solubilidad, que no puede superarse.
+\end{itemize}
+
+\subsection*{Grupo 9. Gas ideal en un cilindro con pistón}
+Simular la compresión lenta de un gas en un cilindro con pistón. El programa calcula la presión en cada paso, el trabajo del pistón y la energía que debe entregar el motor. Modelo base: $PV=nRT$, con trabajo $W=\sum P\,\Delta V$.
+\begin{itemize}
+    \item \textbf{Mecánica (primer integrante):} la fuerza del pistón ($F=PA$), la carrera y el trabajo $W$.
+    \item \textbf{Mecánica (segundo integrante):} la potencia del motor que mueve el pistón y su eficiencia (energía del motor $=W/\eta$).
+    \item \textbf{Química:} los moles de gas (masa/masa molar), la constante $R$ y la mezcla de gases por fracción molar.
+\end{itemize}
+
+\subsection*{Grupo 10. Tren de engranajes: velocidad y torque}
+Simular una caja de tres etapas de engranajes. El programa calcula la velocidad y el torque de salida, la eficiencia total y busca la combinación de dientes que da una velocidad objetivo. Modelo base: $\omega_{sal}=\omega_{ent}\dfrac{N_{ent}}{N_{sal}}$.
+\begin{itemize}
+    \item \textbf{Mecánica (primer integrante):} la relación de transmisión, el torque y la potencia en cada etapa.
+    \item \textbf{Mecánica (segundo integrante):} la masa y la inercia de cada engrane ($I=\tfrac{1}{2}mr^2$) y el torque máximo que soporta el diente.
+    \item \textbf{Química:} la densidad del material y el lubricante, cuya fricción define la eficiencia de cada engranaje.
+\end{itemize}
+
+\subsection*{Grupo 11. Deflexión de una viga con carga puntual}
+Calcular la deflexión máxima de una viga simplemente apoyada con carga puntual en el centro. El programa compara varias secciones rectangulares y elige la más rígida que cumpla un límite de masa. Modelo base: $\delta_{\max}=\dfrac{PL^3}{48EI}$, con $I=\dfrac{bh^3}{12}$.
+\begin{itemize}
+    \item \textbf{Civil:} el modelo estructural (viga, apoyos y cargas), el límite de deflexión $L/360$ y la selección de la sección.
+    \item \textbf{Mecánica (primer integrante):} el momento de inercia $I$ y el esfuerzo máximo $\sigma=Mc/I$, comparado con el esfuerzo admisible.
+    \item \textbf{Mecánica (segundo integrante):} el material: módulo de elasticidad $E$, densidad y masa de la viga (volumen $\times$ densidad).
+\end{itemize}
+
+\subsection*{Grupo 12. Motor de corriente continua con inercia}
+Simular la velocidad de un motor DC que arranca con voltaje escalonado y una carga. El programa calcula la corriente de arranque, la velocidad final y el tiempo de subida, y compara dos cargas. Modelo base: $J\dot{\omega}=K_tI-b\,\omega$ y $L\dot{I}=V-RI-K_e\omega$.
+\begin{itemize}
+    \item \textbf{Eléctrica:} el circuito de armadura, la corriente, la fuerza contraelectromotriz $K_e\,\omega$ y la protección por sobrecorriente.
+    \item \textbf{Mecánica:} la inercia $J$, la fricción $b$, el torque de carga y la potencia mecánica (torque $\times\,\omega$).
+\end{itemize}
+\newpage
+\section*{Requisitos técnicos}
+El programa debe cumplir los diez puntos siguientes. Cada uno se revisa en la entrega 2.
+\begin{enumerate}
+    \item \textbf{Funciones:} al menos 5, cada una con una sola tarea, por ejemplo \texttt{calcular\_paso(estado, parametros)}. Cada función tiene un comentario que dice qué recibe y qué devuelve.
+    \item \textbf{Entrada validada:} antes de convertir un dato con \texttt{float()}, comprueben que sea un número válido con \texttt{texto.replace('.', '', 1).isdigit()} y que esté en el rango del modelo. Si no lo es, se vuelve a preguntar.
+    \item \textbf{Simulación con \emph{mientras}:} la simulación usa un ciclo \texttt{while} con condición de parada y un límite de pasos.
+    \item \textbf{Tabla y resumen con \emph{para}:} un ciclo \texttt{for} con \texttt{range} imprime la tabla cada cierto número de pasos, y al final se muestran el valor máximo, el mínimo y el valor final.
+    \item \textbf{Condicionales:} las alertas usan \texttt{if}, \texttt{elif} y \texttt{else}, y al menos una vez el operador ternario.
+    \item \textbf{Listas o diccionarios:} guardan los resultados de cada escenario para poder compararlos.
+    \item \textbf{Menú:} un ciclo muestra las opciones y se repite hasta elegir salir. Una opción inválida muestra un mensaje y no detiene el programa.
+    \item \textbf{Pruebas:} una función \texttt{probar()} con al menos 5 casos de resultado conocido, que imprime OK o ERROR con \texttt{if}.
+    \item \textbf{README:} explica cómo ejecutar el programa, qué modela, sus ecuaciones y muestra un ejemplo de salida.
+    \item \textbf{Repositorio en GitHub:} con commits de los tres integrantes en cada entrega.
+\end{enumerate}
+\newpage
+\section*{Organización del grupo}
+Cada integrante escribe al menos una función y el grupo revisa el código completo. Los roles rotan en la entrega 2.
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.28\textwidth}X@{}}
+\toprule
+Rol & Responsabilidad principal \\
+\midrule
+Cálculo & Funciones de volumen, nivel y cambio por minuto \\
+Ciclos & El \texttt{while} de la simulación y el \texttt{for} de la tabla \\
+Entrada y menú & Validación de datos, menú, alarmas, resumen y pruebas \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+La rotación queda registrada en el repositorio: cada entrega debe tener commits de los tres integrantes.
+
+\section*{Entregas y cronograma}
+Cada entrega se sube al repositorio del grupo. 
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.34\textwidth}Xr@{}}
+\toprule
+Entrega & Contenido & Puntos \\
+\midrule
+Entrega 1: funciones y pruebas & Al menos 5 funciones y 5 casos de prueba que pasan & 20 \\
+Entrega 2: programa completo & Requisitos 1 a 9 funcionando & 50 \\
+Calidad del código & Nombres claros, comentarios útiles, sin errores & 10 \\
+Sustentación individual & Demostración y explicación de una función & 20 \\
+\midrule
+Total & & 100 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section*{Criterios de evaluación}
+La nota del grupo suma 100 puntos. La sustentación se califica por integrante, así que cada persona recibe su propia nota en esa parte. El peso del proyecto en la nota final del curso lo define el profesor.
+
+\section*{Sustentación}
+Cada grupo tiene 10 minutos: 6 para presentar y 4 para preguntas.
+\begin{itemize}
+    \item \textbf{Demostración:} el programa corre desde cero con un escenario que da el profesor.
+    \item \textbf{Explicación:} cada integrante explica una función que escribió, con su entrada y su salida.
+    \item \textbf{Pregunta individual:} el profesor elige una función y pregunta a un integrante qué hace y por qué está escrita así. La pregunta puede ser sobre una función de otra persona del grupo.
+\end{itemize}
+
+\section*{Reglas y uso de herramientas de IA}
+\begin{itemize}
+    \item \textbf{Notebook:} el proyecto se entrega como notebook, con una función por celda y una prueba debajo de cada una.
+    \item \textbf{Solo Python estándar:} se usan las funciones integradas (\texttt{print}, \texttt{input}, \texttt{float}, \texttt{int}, \texttt{round}, \texttt{len}) y los módulos que trae Python, como \texttt{math}, \texttt{random} y \texttt{statistics}. No se instala nada con \texttt{pip}.
+    \item \textbf{Gráficas opcionales:} no son obligatorias ni se califican. Si el grupo quiere una, puede usar \texttt{matplotlib}, que ya viene en Colab y Jupyter. El curso no lo enseña en clase, así que pueden apoyarse en herramientas de IA para escribir ese código.
+    \item \textbf{Trabajo propio:} copiar código de otro grupo anula la nota del proyecto para los dos grupos.
+    \item \textbf{Herramientas de IA:} pueden usarlas para entender un error o escribir partes del código. Cada integrante debe explicar cada línea que entregue, y el README debe decir para qué se usó la IA.
+    \item \textbf{Ayuda entre grupos:} pueden discutir ideas, pero no compartir archivos de código.
+\end{itemize}
+\newpage
+\section*{Distribución de grupos}
+Los grupos mezclan carreras para que cada integrante aporte una mirada distinta. Cada grupo tiene un proyecto propio, ligado a las carreras de sus integrantes.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.07\textwidth}>{\raggedright\arraybackslash}p{0.60\textwidth}X@{}}
+\toprule
+Grupo & Integrantes & Carreras \\
+\midrule
+\hline
+1 & Castrillón Buitrago, Juan Camilo; Barrera Sandoval, Sebastián; Fonseca Forero, Juan Pablo & Mecánica; Eléctrica; Química \\
+\hline
+2 & Delgado Espinosa, Julián Emanuel; Cendales Correa, Samuel David; García Ortiz, Carol Sofía & Mecánica; Eléctrica; Química \\
+\hline
+3 & Laiton Salamanca, Martín David; González Jaramillo, Taliana; Gil Ballén, Tatiana Paola & Mecánica; Eléctrica; Química \\
+\hline
+4 & Lozano Calle, Jerónimo; Niño Gómez, Juan Ángel; González Toscano, Juan Esteban & Mecánica; Eléctrica; Química \\
+\hline
+5 & Machado Roncancio, Sara Sofía; Pérez Portela, Alejandro; León Molano, Gabriel Santiago & Mecánica; Eléctrica; Química \\
+\hline
+6 & Medina Rincón, Natalia Lucía; Portillo Ascanio, Nicolás Alejandro; Mancera Quique, Sara Sofía & Mecánica; Eléctrica; Química \\
+\hline
+7 & Moreno Laverde, Samuel Esteban; López Garzón, Juan Pablo; Andrade González, Juan David & Mecánica; Civil; Agrícola \\
+\hline
+8 & Olaya Urrego, Johan Esteban; Orozco Rodríguez, Santiago; Meneses Bastidas, Samir Elián & Mecánica; Mecánica; Química \\
+\hline
+9 & Patiño Benavides, Juan José; Pinzón Cifuentes, María Lucía; Ruiz Caballero, Diego Alexander & Mecánica; Mecánica; Química \\
+\hline
+10 & Sepúlveda Neira, Jhojan Stiven; Silva Camargo, Esteban David; Trujillo Sánchez, Kevin Esteban & Mecánica; Mecánica; Química \\
+\hline
+11 & Suarez Sanabria, Juan David; Vaca López, Esteban José; Wilches Salas, Juan Diego & Mecánica; Mecánica; Civil \\
+\hline
+12 & Vásquez Oviedo, Fredy Alejandro; Prieto Celeita, Samuel Fernando & Mecánica; Eléctrica \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\end{document}
